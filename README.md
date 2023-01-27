@@ -6,7 +6,7 @@ Simple drawing app which includes several basic shapes (Rectangle, Line, Circle)
 
 ## The process
 
-* added the uploading of image and its setting as a background for canvas;
+* added the uploading of an image and its setting as a background for canvas;
 * added console logging of the brush movement - the coordinates (x, y) are being stored inside the array;
 * added logging of the eraser movement:
     * the coordinates are supposed to be compared with brush drawn figure coordinates;
@@ -16,6 +16,7 @@ Simple drawing app which includes several basic shapes (Rectangle, Line, Circle)
 ## Visual
 
 [![visual.jpg](https://i.postimg.cc/pr6g1GY1/visual.jpg)](https://postimg.cc/q62bNGF8)
+[![screen-painter.jpg](https://i.postimg.cc/0Nw5QGq6/screen-painter.jpg)](https://postimg.cc/sB3CHhxy)
 
 ### Based on CodingNepal tutorial
 

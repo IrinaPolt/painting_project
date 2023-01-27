@@ -87,7 +87,7 @@ const drawing = (e) => {
         ctx.stroke(); // drawing/filling line with color
         let coords = [e.offsetX, e.offsetY];
         coordinates.push(coords);
-    } else if (selectedTool === "eraser") {
+    /*} else if (selectedTool === "eraser") {
         let eraserCoord = [e.offsetX, e.offsetY];
         arrEraser.push(eraserCoord);
 
@@ -95,7 +95,7 @@ const drawing = (e) => {
             alert('пересечение!');
             coordinates.length=0; // deleting the drawn figure coords
             ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing the canvas
-        }
+        }*/
     } else if(selectedTool === "rectangle"){
         drawRect(e);
     } else if(selectedTool === "circle"){
