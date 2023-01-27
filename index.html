@@ -65,9 +65,13 @@
                 <div class="row buttons">
                     <button class="clear-canvas"> Clear Canvas </button>
                     <button class="save-img"> Save as Image </button>
+                    <div>
+                        <label for="file">Choose file to upload</label>
+                        <input type="file" id="file" onchange="loadFile(event)" name="file">
+                    </div>
                 </div>
             </section>
-            <section class="drawing-board">
+            <section class="drawing-board" style="width:100%;" id="drawing-board">
                 <canvas></canvas>
             </section>
         </div>

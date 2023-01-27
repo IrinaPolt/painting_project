@@ -6,18 +6,28 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
-ctx = canvas.getContext("2d");
+ctx = canvas.getContext("2d", {willReadFrequently: true});
 
 // global variables with default value
-let prevMouseX, prevMouseY, snapshot,
+var prevMouseX, prevMouseY, snapshot,
 isDrawing = false,
 selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
 
+let coordinates = []; // variable to store the coordinates of the drawn line
+let arrEraser = []; // variable to store the coordinates of eraser movement
+
+var loadFile = function(event) {
+    // allows to load the file for background
+    var output = document.getElementById('drawing-board');
+    output.style.backgroundImage= "url("+URL.createObjectURL(event.target.files[0])+")";
+  };
+
+
 const setCanvasBackground = () => {
     // setting whole canvas background to white, so the downloaded img background will be white
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = selectedColor; // setting fillstyle back to the selectedColor, it'll be the brush color
 }
@@ -40,7 +50,7 @@ const drawRect = (e) => {
     // if fillColor isn't checked draw a rect with border else draw rect with background
     if(!fillColor.checked) {
         // creating circle according to the mouse pointer
-        return ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+        return ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY); 
     }
     ctx.fillRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
 }
@@ -54,6 +64,8 @@ const drawCircle = (e) => {
 }
 
 const startDraw = (e) => {
+    // console.log(e.offsetX, e.offsetY); output of coordinates of the starting point
+
     isDrawing = true;
     prevMouseX = e.offsetX; // passing current mouseX position as prevMouseX value
     prevMouseY = e.offsetY; // passing current mouseY position as prevMouseY value
@@ -69,12 +81,21 @@ const drawing = (e) => {
     if(!isDrawing) return; // if isDrawing is false return from here
     ctx.putImageData(snapshot, 0, 0); // adding copied canvas data on to this canvas
 
-    if(selectedTool === "brush" || selectedTool === "eraser") {
-        // if selected tool is eraser then set strokeStyle to white 
-        // to paint white color on to the existing canvas content else set the stroke color to selected color
-        ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
+    if (selectedTool === "brush" ) {
+        ctx.strokeStyle = selectedColor;
         ctx.lineTo(e.offsetX, e.offsetY); // creating line according to the mouse pointer
         ctx.stroke(); // drawing/filling line with color
+        let coords = [e.offsetX, e.offsetY];
+        coordinates.push(coords);
+    } else if (selectedTool === "eraser") {
+        let eraserCoord = [e.offsetX, e.offsetY];
+        arrEraser.push(eraserCoord);
+
+        if (.........................) { // check whether the object inside of one arr is equal to the object in another one
+            alert('пересечение!');
+            coordinates.length=0; // deleting the drawn figure coords
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // clearing the canvas
+        }
     } else if(selectedTool === "rectangle"){
         drawRect(e);
     } else if(selectedTool === "circle"){
@@ -125,4 +146,9 @@ saveImg.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
-canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mouseup", () => {
+    isDrawing = false;
+    for (let item of coordinates) {
+        console.log(item);
+    }
+});
